@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Informe de  incidente</title>
+    <style>
+        @page {
+            size: letter;
+            @top-center{
+                content: "Estacion Radar Managua";
+                vertical-align: bottom;
+                border-bottom: 0.5pt solid; font-size: 1.1em;
+                font-style: bold;
+                margin-bottom: 10px;
+            }
+            @bottom-center {
+                 content: "Pagina " counter(page)
+                     " de " counter(pages);
+                  font-size: 12px;
+            }
+            @top-right-corner {
+                margin-top: 22px;
+                padding-bottom: 15px;
+                padding-left: 8px;
+                content: "EAAI";
+                vertical-align: bottom;
+                color: #FFFFFF;
+                background: #ff5722;
+                font-style: bold;
+            }
+        }
+
+     .blue-grey {
+      color: #455A64
+     }
+     pre {
+      background: #455A64;
+      color: white;
+      padding: 6px;
+      border-radius: 5px;
+     }
+
+     h5:first-letter  { text-transform: uppercase;font-size: 1.2em }
+
+       p{
+        font-size: 13px
+        color: #000000;
+       }
+       div {
+       font-size: 13px
+       }
+        .borders {
+            border: 0.8pt solid #e64a19;
+            border-collapse: collapse;
+            padding: 5px;
+       }
+       table th {background-color:#e64a19  ;padding: 5px; color: white}
+       table {border-collapse: collapse;}
+
+
+    </style>
+</head>
+<body>
+
+<div style="border-left: 2.99pt groove #455A64; margin-top: 40px; padding-left: 10px">Registro de incidente</div>
+
+<table style="width:100%;border-bottom: 1.5pt; margin-top: 20px">
+            <tr style='font-size:14px;  '>
+                <th style="text-align:left">
+                    {{ incident.title }}
+                </th>
+                 <th style="width:35%; text-align:right">
+                    Incidente: #{{ incident.id }}
+                </th>
+            </tr>
+    <tr style='font-size:14px'>
+                <td>
+                    {{ incident.created_at}}
+                </td>
+            </tr>
+    <tr style='font-size:14px'>
+                <td style="width:60%; text-align:left;" colspan="2">
+                    {{ incident.created_by.full_name}}
+                </td>
+            </tr>
+
+</table>
+
+<table style="width:100%; border: 1.1pt solid #e64a19; margin-top: 2px">
+            <tr  style='font-size:12px;'>
+                <th class="borders" style="width:40%;">
+                   Categoria
+                </th>
+                 <th class="borders" style="width:15%; text-align:center">
+                    Severidad
+                </th>
+                 <th class="borders" style="width:15%;text-align:center">
+                    Origen
+                </th>
+                  <th style="width:30%;text-align:right">
+                    Reporto
+                </th>
+            </tr>
+            <tr style='font-size:12px;' align="center">
+                <td class="borders">
+                    {{ incident.category}}
+                </td>
+                <td class="borders" style="text-align:center">
+                    {{ incident.severity}}
+                </td >
+                <td class="borders" style="text-align:center">
+                    {{ incident.source}}
+                </td>
+                <td  class="borders" style="text-align:right">
+                    {{ incident.notified_by}}
+                </td>
+            </tr>
+
+
+</table>
+
+<h5 style="color: #d84315">Reporte</h5>
+<p>
+    {{ incident.incident_description | safe }}
+</p>
+
+<h5 style="color: #d84315">Seguimiento</h5>
+<div style="margin-left: 15px">
+{% for e in incident.incident_entries.all %}
+
+
+<table style="width:100%;margin-top: 8px; border-bottom: 1.5pt solid #455A64">
+
+            <tr style='font-size:12px;'>
+                <td>
+                    <i>{{ e.created_by.full_name}}</i>
+                </td>
+                <td style="text-align:right">
+                    <i>{{ e.created_at}}</i>
+                </td>
+
+            </tr>
+
+
+</table>
+   <p > {{ e.description | safe }} </p>
+    <hr style="color:#bdbdbd">
+    <br>
+{% endfor %}
+</div>
+
+
+</body>
+</html>

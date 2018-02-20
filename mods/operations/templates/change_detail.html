@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Informe de  incidente</title>
+    <style>
+        @page {
+            size: letter;
+            @top-center{
+                content: "Estacion Radar Managua";
+                vertical-align: bottom;
+                border-bottom: 0.5pt solid; font-size: 1.1em;
+                font-style: bold;
+                margin-bottom: 10px;
+            }
+            @bottom-center {
+                 content: "Pagina " counter(page)
+                     " de " counter(pages);
+                  font-size: 12px;
+            }
+            @top-right-corner {
+                margin-top: 22px;
+                padding-bottom: 15px;
+                padding-left: 8px;
+                content: "EAAI";
+                vertical-align: bottom;
+                color: #FFFFFF;
+                background: #00695c;
+                font-style: bold;
+            }
+        }
+
+     .blue-grey {
+      color: #455A64
+     }
+     pre {
+      background: #455A64;
+      color: white;
+      padding: 6px;
+      border-radius: 5px;
+     }
+
+     h5:first-letter  { text-transform: uppercase;font-size: 1.2em }
+
+       p{
+        font-size: 13px
+        color: #000000;
+       }
+       div {
+       font-size: 13px
+       }
+
+       .borders {
+            border: 0.8pt solid #00796b;
+            border-collapse: collapse;
+            padding: 5px;
+       }
+       table th {background-color: #00796b ;padding: 5px; color:white}
+       table {border-collapse: collapse;}
+
+    </style>
+</head>
+<body>
+
+<div style="border-left: 2.99pt groove #455A64; margin-top: 40px; padding-left: 10px">Registro de cambio</div>
+
+<table style="margin-top: 20px">
+            <tr style='font-size:13px;  '>
+                <th style="text-align:left">
+                    {{ change.title | capfirst }}
+                </th>
+                 <th style="width:35%; text-align:right">
+                    Cambio: #{{ change.id }}
+                </th>
+            </tr>
+    <tr style='font-size:14px'>
+                <td>
+                    {{ change.created_at}}
+                </td>
+            </tr>
+    <tr style='font-size:14px'>
+                <td style="width:60%; text-align:left;" colspan="2">
+                    {{ change.created_by.full_name}}
+                </td>
+            </tr>
+
+</table>
+
+<table class="borders" style="width:100%;  margin-top: 2px">
+            <tr style='font-size:12px;'>
+                <th style="text-align:center;width:25%;" class="borders">
+                   Inicio planificado
+                </th>
+                 <th class="borders" style="width:25%; text-align:center">
+                    Fin planificado
+                </th>
+                 <th class="borders" style="width:25%;text-align:center">
+                    Iniciado
+                </th>
+                  <th class="borders" style="width:25%;text-align:center">
+                    Finalizado
+                </th>
+            </tr>
+            <tr style='font-size:12px;' align="center">
+                <td class="borders" style="text-align:center">
+                    {{ change.planned_start  |date:"d M Y "}}
+                </td>
+                <td class="borders" style="text-align:center">
+                    {{ change.planned_completion  |date:"d M Y  "}}
+                </td>
+                <td class="borders" style="text-align:center">
+                    {{ change.started_on  |date:"d M Y" }}
+                </td>
+                <td class="borders" style="text-align:center">
+                    {{ change.finished_on  |date:"d M Y"}}
+                </td>
+            </tr>
+    <tr>
+            <td class="borders" style="font-size:12.5px">
+                    Solicitado por
+                </td>
+                <td class="borders"  colspan="3" style="font-size:12.5px">
+                    {{ change.request_by }}
+                </td>
+    </tr>
+    <tr>
+            <td class="borders" style=" font-size:12.5px">
+                    A cargo de
+                </td>
+                <td class="borders"  colspan="3"  style="font-size:12.5px">
+                    {{ change.executed_by }}
+                </td>
+    </tr>
+
+
+
+</table>
+<br>
+<label style="color:#00695c; font-size:12.5px;margin-bottom:4px">Justificacion</label>
+    {{ change.justification | safe }}
+
+<br>
+<label style="color:#00695c; font-size:12.5px">Seguimiento</label>
+
+<div style="margin-left: 15px">
+{% for e in change.change_entries.all %}
+
+
+<table style="width:100%;margin-top: 8px; border-bottom: 1.5pt solid #455A64">
+
+            <tr style='font-size:12px;'>
+                <td>
+                    <i>{{ e.created_by.full_name}}</i>
+                </td>
+                <td style="text-align:right">
+                    <i>{{ e.created_at}}</i>
+                </td>
+
+            </tr>
+
+
+</table>
+   <p > {{ e.changes | safe }} </p>
+    <hr style="color:#bdbdbd">
+    <br>
+{% endfor %}
+</div>
+
+
+</body>
+</html>

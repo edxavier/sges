@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Informe de  incidente</title>
+    <style>
+        @page {
+            size: letter;
+            @top-center{
+                content: "Estación Radar Managua";
+                vertical-align: bottom;
+                border-bottom: 0.5pt solid; font-size: 1.3em;
+                font-style: bold;
+                margin-bottom: 10px;
+            }
+            @bottom-center {
+                 content: "Pagina " counter(page)
+                     " de " counter(pages);
+                  font-size: 12px;
+            }
+            @top-right-corner {
+                margin-top: 22px;
+                padding-bottom: 15px;
+                padding-left: 8px;
+                content: "EAAI";
+                vertical-align: bottom;
+                color: #FFFFFF;
+                background: #455;
+                font-style: bold;
+            }
+        }
+
+     .blue-grey {
+      color: #455A64
+     }
+     pre {
+      background: #455A64;
+      color: white;
+      padding: 6px;
+      border-radius: 5px;
+     }
+
+     h5:first-letter  { text-transform: uppercase;font-size: 1.2em }
+
+       p{
+        font-size: 13px
+        color: #000000;
+       }
+       div {
+       font-size: 13px
+       }
+
+
+    </style>
+</head>
+<body>
+
+<div style="border-left: 2.99pt groove #455A64; margin-top: 40px; padding-left: 10px">Procedimiento de solucion para error conocido</div>
+{% load tz %}
+{% timezone  "America/Costa_Rica" %}
+<table style="width:100%;border-top: 2.5pt double;border-bottom: 2pt double; margin-top: 20px">
+            <tr style='font-size:14px;  '>
+                <th style="text-align:left" colspan="2">
+                    {{ workaround.title }}
+                </th>
+                 <th style="width:25%; text-align:right">
+                    #{{ workaround.id }}
+                </th>
+            </tr>
+    <tr><td colspan="3"></td></tr>
+    <tr style='font-size:14px;'>
+                <td style="width:15%; text-align:left">
+                    Creado:
+                </td>
+                 <td style="text-align:left">
+                    {{ workaround.created_by.full_name }}
+                </td>
+                <td style="text-align:right">
+                    {{ workaround.created_at |date:"d M Y  h:i a"}}
+                </td>
+            </tr>
+    {% if workaround.updated_by %}
+    <tr style='font-size:14px'>
+               <td style="width:15%; text-align:left">
+                    Modificado:
+                </td>
+                 <td style="text-align:left">
+                    {{ workaround.updated_by.full_name }}
+                </td>
+                <td style="text-align:right">
+                    {{ workaround.update_at |date:"d M Y  h:i a"}}
+                </td>
+            </tr>
+    {% endif %}
+
+</table>
+
+<p>
+    {{ workaround.description | safe }}
+</p>
+
+{% endtimezone   %}
+</body>
+</html>
