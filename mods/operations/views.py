@@ -8,6 +8,7 @@ from django.db.models import F
 from django.db.models import Count, Sum
 from django.db.models.functions import Cast
 from django.db.models import FloatField
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 # Create your views here.
 
 class IncidentResumeViewSet(viewsets.ModelViewSet):
